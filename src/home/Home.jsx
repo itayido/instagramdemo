@@ -1,13 +1,7 @@
-import { useEffect, useState, BrowserRouter, Routes, Route } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react";
 
 function Home() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route></Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <Link to="/home/todolist">To Do </Link>;
 }
 
 export default Home;

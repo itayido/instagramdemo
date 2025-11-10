@@ -26,7 +26,7 @@ function Login() {
 
       if (user.website === password) {
         setMessage(`Welcome back, ${user.username}!`);
-        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("ActiveUser", JSON.stringify(user));
         navigate("/home");
       } else {
         setMessage("Incorrect password.");
