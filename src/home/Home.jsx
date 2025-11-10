@@ -1,7 +1,11 @@
-import { BrowserRouter, Routes, Route, Link } from "react";
+import Nav from "./components/Nav";
 
 function Home() {
-  return <Link to="/home/todolist">To Do </Link>;
+  return (
+    <>
+      <Nav />
+    </>
+  );
 }
 
 export default Home;

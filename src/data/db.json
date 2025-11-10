@@ -114,9 +114,22 @@
         "catchPhrase": "User-centric fault-tolerant solution",
         "bs": "revolutionize end-to-end systems"
       }
+    },
+    {
+      "id": "6",
+      "username": "itay",
+      "website": "1234",
+      "email": "itay@itay.com",
+      "phone": "009876543"
+    },
+    {
+      "id": "21c0",
+      "username": "tsofia",
+      "website": "1234",
+      "email": "tsofia@tsofia",
+      "phone": "098765"
     }
   ],
-
   "posts": [
     {
       "userId": 1,
