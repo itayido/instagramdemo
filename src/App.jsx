@@ -5,6 +5,9 @@ import Todo from "./home/Todo";
 import AddInfo from "./register/AddInfo";
 import Register from "./register/register";
 import Info from "./home/components/Info";
+import Posts from "./home/components/Posts";
+import PostDetails from "./home/components/PostDetails";
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
 import Albums from "./home/components/Albums";
 import AlbumDetails from "./home/components/AlbumDetails";
@@ -21,11 +24,13 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/home/todolist" element={<Todo />} />
           <Route path="/home/info" element={<Info />} />
+          <Route path="/home/posts" element={<Posts />} />
+          <Route path="/home/posts/:id" element={<PostDetails />} />
           <Route path="/home/albums" element={<Albums></Albums>}></Route>
           <Route
             path="/albums/:id"
             element={<AlbumDetails></AlbumDetails>}
-          ></Route>
+          ></Route>{" "}
         </Routes>
       </Router>
     </>
