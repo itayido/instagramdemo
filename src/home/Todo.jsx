@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function Todo() {
   const [data, setData] = useState([]);
-  const [Value, setValue] = useState();
+  const [value, setValue] = useState("");
 
   const ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
   useEffect(() => {
@@ -19,7 +19,7 @@ function Todo() {
       }
     }
     fetchitems();
-  }, [ActiveUser.id]);
+  }, []);
 
   const handleCheckboxChange = async (id) => {
     const listToDo = data.map((item) =>
@@ -57,7 +57,7 @@ function Todo() {
       id: "" + newId,
       title,
       completed: false,
-      userId: ActiveUser.id,
+      userId: "" + ActiveUser.id,
     };
     setData((prev) => [...prev, newItem]);
 
@@ -97,12 +97,18 @@ function Todo() {
     }
   };
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    addToDo(value);
+    setValue("");
+  }
+
   return (
     <div>
       {
         <ul>
           {data.length === 0
-            ? "NO TO DOS LEFT"
+            ? "No To Dos Left"
             : data.map((todo) => (
                 <li key={todo.id}>
                   <input
@@ -116,16 +122,15 @@ function Todo() {
               ))}
         </ul>
       }
-      <input
-        type="text"
-        placeholder="הוסף משימה..."
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && e.target.value.trim()) {
-            addToDo(e.target.value.trim());
-            e.target.value = "";
-          }
-        }}
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={value}
+          placeholder="add to do"
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
     </div>
   );
 }
