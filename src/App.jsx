@@ -6,6 +6,8 @@ import AddInfo from "./register/AddInfo";
 import Register from "./register/register";
 import Info from "./home/components/Info";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
+import Albums from "./home/components/Albums";
+import AlbumDetails from "./home/components/AlbumDetails";
 
 function App() {
   return (
@@ -19,6 +21,11 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/home/todolist" element={<Todo />} />
           <Route path="/home/info" element={<Info />} />
+          <Route path="/home/albums" element={<Albums></Albums>}></Route>
+          <Route
+            path="/albums/:id"
+            element={<AlbumDetails></AlbumDetails>}
+          ></Route>
         </Routes>
       </Router>
     </>
