@@ -50,7 +50,6 @@ function AlbumDetails() {
       if (itemToRestore) {
         setDetails((prev) => [...prev, itemToRestore]);
       }
-      alert("שגיאה במחיקה");
     }
   };
 
@@ -82,8 +81,9 @@ function AlbumDetails() {
     <div>
       <ul>
         {details.length === 0
-          ? "אין תמונות"
+          ? "No Photos"
           : details.map((photo) => {
+              console.log("photo: ", photo);
               return (
                 <li key={photo.id}>
                   <img
@@ -95,11 +95,11 @@ function AlbumDetails() {
               );
             })}
       </ul>
-      <button onClick={handleLoadMore}>טען עוד</button>
+      <button onClick={handleLoadMore}>load more</button>
       <input
         style={{ marginTop: "5px" }}
         type="text"
-        placeholder="  url הכנס כתובת "
+        placeholder=" enter url "
         onKeyDown={(e) => {
           if (e.key === "Enter" && e.target.value.trim()) {
             addPhotos(e.target.value.trim());

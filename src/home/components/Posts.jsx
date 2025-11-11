@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
 
@@ -25,7 +27,6 @@ function Posts() {
   async function addPost(title, body) {
     const tempId = "temp" + Date.now();
     const newItem = { id: tempId, userId: "" + ActiveUser.id, title, body };
-
     setPosts((prev) => [...prev, newItem]);
 
     try {
@@ -37,31 +38,21 @@ function Posts() {
       if (!res.ok) throw new Error();
 
       const createdPost = await res.json();
-
-      setPosts((prev) =>
-        prev.map((post) => (post.id === tempId ? createdPost : post))
-      );
+      setPosts((prev) => prev.map((p) => (p.id === tempId ? createdPost : p)));
     } catch {
-      setPosts((prev) => prev.filter((post) => post.id !== tempId));
+      setPosts((prev) => prev.filter((p) => p.id !== tempId));
     }
   }
 
   async function deletePost(id) {
     setPosts((prev) => prev.filter((item) => item.id !== id));
     try {
-      const response = await fetch(`http://localhost:3000/posts/${id}`, {
+      await fetch(`http://localhost:3000/posts/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-
-      if (!response.ok) throw new Error("failed");
-      console.log("deleted");
     } catch (err) {
       console.log("error:", err);
-      const itemToRestore = posts.find((post) => post.id === id);
-      if (itemToRestore) {
-        setPosts((prev) => [...prev, itemToRestore]);
-      }
     }
   }
 
@@ -71,17 +62,31 @@ function Posts() {
     setTitle("");
     setContent("");
   }
+
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   return (
     <div>
       <h2>Posts by {ActiveUser.username}</h2>
+      <label htmlFor="search">Search:</label>
+      <input
+        id="search"
+        type="text"
+        placeholder="Search by title..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
+
       <ul>
-        {posts.length === 0 ? (
+        {filteredPosts.length === 0 ? (
           <p>No Posts</p>
         ) : (
-          posts.map((post) => (
+          filteredPosts.map((post) => (
             <div key={post.id}>
-              <Link to={`/home/posts/${post.id}`}>
-                <li key={post.id}>
+              <Link to={`post/${post.id}`}>
+                <li>
                   ID: {post.id} <br />
                   Title: {post.title}
                 </li>
@@ -91,28 +96,27 @@ function Posts() {
           ))
         )}
       </ul>
-      <h4> Add new post </h4>
+
+      <h4>Add new post</h4>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Post Title:</label>
+        <label>Title:</label>
         <input
           type="text"
-          id="title"
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
         <br />
-        <label htmlFor="content">Post Content:</label>
+        <label>Content:</label>
         <input
           type="text"
-          id="content"
           placeholder="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required
         />
-        <button type="submit"> Add </button>
+        <button type="submit">Add</button>
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ import { Link } from "react-router";
 function Albums() {
   const [albumsList, setAlbumsList] = useState([]);
   const ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
+
   useEffect(() => {
     async function fetchAlbums() {
       try {
@@ -36,11 +37,7 @@ function Albums() {
       });
       if (!res.ok) throw new Error();
       const created = await res.json();
-      if (created.id !== newId) {
-        setAlbumsList((prev) =>
-          prev.map((t) => (t.id === newId ? created : t))
-        );
-      }
+      setAlbumsList((prev) => prev.map((t) => (t.id === newId ? created : t)));
     } catch {
       setAlbumsList((prev) => prev.filter((t) => t.id !== newId));
     }
@@ -50,20 +47,19 @@ function Albums() {
     <div>
       <ul>
         {albumsList.length === 0
-          ? "אין אלבומים"
-          : albumsList.map((album) => {
-              return (
-                <li key={album.id}>
-                  <Link to={`/albums/${album.id}`}>
-                    {album.title} {album.id}
-                  </Link>
-                </li>
-              );
-            })}
+          ? "No Albums"
+          : albumsList.map((album) => (
+              <li key={album.id}>
+                <Link to={`album/${album.id}`}>
+                  {album.title} ({album.id})
+                </Link>
+              </li>
+            ))}
       </ul>
+
       <input
         type="text"
-        placeholder="הוסף משימה..."
+        placeholder="add album"
         onKeyDown={(e) => {
           if (e.key === "Enter" && e.target.value.trim()) {
             addAlbum(e.target.value.trim());

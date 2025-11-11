@@ -3,13 +3,13 @@ import Logout from "./Logout";
 
 function Nav() {
   return (
-    <>
-      <Link to="/home/info">Info </Link>
-      <Link to="/home/todolist">To Do List </Link>
-      <Link to="/home/posts">Posts </Link>
-      <Link to="/home/albums">Albums </Link>
+    <nav style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
+      <Link to="info">Info</Link>
+      <Link to="todolist">To Do List</Link>
+      <Link to="posts">Posts</Link>
+      <Link to="albums">Albums</Link>
       <Logout />
-    </>
+    </nav>
   );
 }
 

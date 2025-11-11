@@ -105,25 +105,46 @@ function Todo() {
     setValue("");
   }
 
+  function handleSort(e) {
+    const option = e.target.value;
+    let sorted = [...data];
+
+    if (option === "alpha")
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
+    else if (option === "completed")
+      sorted.sort((a, b) => a.completed - b.completed);
+    else if (option === "random") sorted.sort(() => Math.random() - 0.5);
+
+    setData(sorted);
+  }
+
   return (
     <div>
-      {
-        <ul>
-          {data.length === 0
-            ? "No To Dos Left"
-            : data.map((todo) => (
-                <li key={todo.id}>
-                  <input
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => handleCheckboxChange(todo.id)}
-                  />
-                  {todo.title}
-                  <button onClick={() => deleteToDo(todo.id)}>delete</button>
-                </li>
-              ))}
-        </ul>
-      }
+      <label>
+        sort by
+        <select onChange={handleSort}>
+          <option value="alpha">a-z</option>
+          <option value="completed">completed</option>
+          <option value="random">random</option>
+        </select>
+      </label>
+
+      <ul>
+        {data.length === 0
+          ? "No To Dos Left"
+          : data.map((todo) => (
+              <li key={todo.id}>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleCheckboxChange(todo.id)}
+                />
+                {todo.title}
+                <button onClick={() => deleteToDo(todo.id)}>delete</button>
+              </li>
+            ))}
+      </ul>
+
       <form onSubmit={handleSubmit}>
         <label htmlFor="add">Add to do</label>
         <input

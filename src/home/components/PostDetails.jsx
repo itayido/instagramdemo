@@ -13,21 +13,18 @@ function PostDetails() {
     async function fetchPost() {
       try {
         const postRes = await fetch(`http://localhost:3000/posts/${postId}`);
-        if (!postRes.ok) throw new Error("Failed to get the post");
         const data = await postRes.json();
         setPost(data);
 
         const commentsRes = await fetch(
           `http://localhost:3000/comments?postId=${postId}`
         );
-        if (!commentsRes.ok) throw new Error("Failed to get the comments");
         const commentsData = await commentsRes.json();
         setComments(commentsData);
       } catch (err) {
         console.error("Error:", err);
       }
     }
-
     fetchPost();
   }, [postId]);
 
@@ -36,7 +33,7 @@ function PostDetails() {
 
     const tempId = "temp" + Date.now();
     const newItem = {
-      postId: postId,
+      postId,
       id: tempId,
       name: ActiveUser.username,
       email: ActiveUser.email,
@@ -50,28 +47,20 @@ function PostDetails() {
       const res = await fetch("http://localhost:3000/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          postId: postId,
-          name: ActiveUser.username,
-          email: ActiveUser.email,
-          body: newComment,
-        }),
+        body: JSON.stringify(newItem),
       });
       if (!res.ok) throw new Error("Failed");
 
       const created = await res.json();
-      setComments((prev) =>
-        prev.map((comment) => (comment.id === tempId ? created : comment))
-      );
+      setComments((prev) => prev.map((c) => (c.id === tempId ? created : c)));
     } catch (err) {
       console.error("Error:", err);
-      setComments((prev) => prev.filter((comment) => comment.id !== tempId));
+      setComments((prev) => prev.filter((c) => c.id !== tempId));
     }
   }
 
   async function deleteComment(commentId) {
     const comment = comments.find((c) => c.id === commentId);
-
     setComments((prev) => prev.filter((c) => c.id !== commentId));
 
     try {
@@ -87,7 +76,7 @@ function PostDetails() {
 
   return (
     <div>
-      <Link to="/home/posts">Back to Posts</Link>
+      <Link to="../posts">Back to Posts</Link>
 
       <h2>{post.title}</h2>
       <p>{post.body}</p>
@@ -96,20 +85,18 @@ function PostDetails() {
       {comments.length === 0 ? (
         <p>No comments</p>
       ) : (
-        <details>
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment.id}>
-                <strong>{comment.name}</strong>: {comment.body}
-                {comment.email === ActiveUser.email && (
-                  <button onClick={() => deleteComment(comment.id)}>
-                    Delete
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
-        </details>
+        <ul>
+          {comments.map((comment) => (
+            <li key={comment.id}>
+              <strong>{comment.name}</strong>: {comment.body}
+              {comment.email === ActiveUser.email && (
+                <button onClick={() => deleteComment(comment.id)}>
+                  Delete
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
       )}
 
       <form onSubmit={addComment}>
