@@ -9,6 +9,8 @@ import Posts from "./home/components/Posts";
 import PostDetails from "./home/components/PostDetails";
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
+import Albums from "./home/components/Albums";
+import AlbumDetails from "./home/components/AlbumDetails";
 
 function App() {
   return (
@@ -23,7 +25,12 @@ function App() {
           <Route path="/home/todolist" element={<Todo />} />
           <Route path="/home/info" element={<Info />} />
           <Route path="/home/posts" element={<Posts />} />
-          <Route path="/home/posts/:postId" element={<PostDetails />} />
+          <Route path="/home/posts/:id" element={<PostDetails />} />
+          <Route path="/home/albums" element={<Albums></Albums>}></Route>
+          <Route
+            path="/albums/:id"
+            element={<AlbumDetails></AlbumDetails>}
+          ></Route>{" "}
         </Routes>
       </Router>
     </>
