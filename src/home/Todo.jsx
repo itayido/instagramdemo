@@ -101,17 +101,19 @@ function Todo() {
     <div>
       {
         <ul>
-          {data.map((todo) => (
-            <li key={todo.id}>
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => handleCheckboxChange(todo.id)}
-              />
-              {todo.title}
-              <button onClick={() => deleteToDo(todo.id)}>delete</button>
-            </li>
-          ))}
+          {data.length === 0
+            ? "NO TO DOS LEFT"
+            : data.map((todo) => (
+                <li key={todo.id}>
+                  <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => handleCheckboxChange(todo.id)}
+                  />
+                  {todo.title}
+                  <button onClick={() => deleteToDo(todo.id)}>delete</button>
+                </li>
+              ))}
         </ul>
       }
       <input
