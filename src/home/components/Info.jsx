@@ -9,7 +9,7 @@ function Info() {
       <ul>
         <li>ID: {user.id}</li>
         <li>Username: {user.username}</li>
-        <li>Password: {user.website}</li>
+        <li>Password: ******</li>
         <li>Email: {user.email}</li>
         <li>Phone: {user.phone}</li>
       </ul>

@@ -23,7 +23,7 @@ function App() {
           <Route path="/home/todolist" element={<Todo />} />
           <Route path="/home/info" element={<Info />} />
           <Route path="/home/posts" element={<Posts />} />
-          <Route path="/home/posts/:id" element={<PostDetails />} />
+          <Route path="/home/posts/:postId" element={<PostDetails />} />
         </Routes>
       </Router>
     </>

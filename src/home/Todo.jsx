@@ -52,9 +52,9 @@ function Todo() {
   };
 
   const addToDo = async (title) => {
-    const newId = data.length ? Number(data[data.length - 1].id) + 1 : 1;
+    const tempId = "temp" + Date.now();
     const newItem = {
-      id: "" + newId,
+      id: tempId,
       title,
       completed: false,
       userId: "" + ActiveUser.id,
@@ -67,13 +67,16 @@ function Todo() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
       });
+
       if (!res.ok) throw new Error();
-      const created = await res.json();
-      if (created.id !== newId) {
-        setData((prev) => prev.map((t) => (t.id === newId ? created : t)));
-      }
+
+      const createdtodo = await res.json();
+
+      setData((prev) =>
+        prev.map((todo) => (todo.id === tempId ? createdtodo : todo))
+      );
     } catch {
-      setData((prev) => prev.filter((t) => t.id !== newId));
+      setData((prev) => prev.filter((t) => t.id !== tempId));
     }
   };
 
@@ -93,7 +96,6 @@ function Todo() {
       if (itemToRestore) {
         setData((prev) => [...prev, itemToRestore]);
       }
-      alert("שגיאה במחיקה");
     }
   };
 
@@ -123,10 +125,12 @@ function Todo() {
         </ul>
       }
       <form onSubmit={handleSubmit}>
+        <label htmlFor="add">Add to do</label>
         <input
+          id="add"
           type="text"
           value={value}
-          placeholder="add to do"
+          placeholder="new to do"
           onChange={(e) => setValue(e.target.value)}
         />
         <button type="submit">Add</button>

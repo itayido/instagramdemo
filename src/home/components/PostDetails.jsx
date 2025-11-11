@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 
 function PostDetails() {
-  const { id } = useParams();
+  const { postId } = useParams();
   const [post, setPost] = useState("");
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+
+  const ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
 
   useEffect(() => {
     async function fetchPost() {
       try {
-        const postRes = await fetch(`http://localhost:3000/posts/${id}`);
+        const postRes = await fetch(`http://localhost:3000/posts/${postId}`);
         if (!postRes.ok) throw new Error("Failed to get the post");
         const data = await postRes.json();
         setPost(data);
 
         const commentsRes = await fetch(
-          `http://localhost:3000/comments?postId=${id}`
+          `http://localhost:3000/comments?postId=${postId}`
         );
         if (!commentsRes.ok) throw new Error("Failed to get the comments");
         const commentsData = await commentsRes.json();
@@ -26,7 +29,61 @@ function PostDetails() {
     }
 
     fetchPost();
-  }, [id]);
+  }, [postId]);
+
+  async function addComment(e) {
+    e.preventDefault();
+
+    const tempId = "temp" + Date.now();
+    const newItem = {
+      postId: postId,
+      id: tempId,
+      name: ActiveUser.username,
+      email: ActiveUser.email,
+      body: newComment,
+    };
+
+    setComments((prev) => [...prev, newItem]);
+    setNewComment("");
+
+    try {
+      const res = await fetch("http://localhost:3000/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          postId: postId,
+          name: ActiveUser.username,
+          email: ActiveUser.email,
+          body: newComment,
+        }),
+      });
+      if (!res.ok) throw new Error("Failed");
+
+      const created = await res.json();
+      setComments((prev) =>
+        prev.map((comment) => (comment.id === tempId ? created : comment))
+      );
+    } catch (err) {
+      console.error("Error:", err);
+      setComments((prev) => prev.filter((comment) => comment.id !== tempId));
+    }
+  }
+
+  async function deleteComment(commentId) {
+    const comment = comments.find((c) => c.id === commentId);
+
+    setComments((prev) => prev.filter((c) => c.id !== commentId));
+
+    try {
+      const res = await fetch(`http://localhost:3000/comments/${commentId}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed");
+    } catch (err) {
+      console.error("Error:", err);
+      setComments((prev) => [...prev, comment]);
+    }
+  }
 
   return (
     <div>
@@ -34,21 +91,38 @@ function PostDetails() {
 
       <h2>{post.title}</h2>
       <p>{post.body}</p>
-      <h3>Comments:</h3>
 
+      <h3>Comments:</h3>
       {comments.length === 0 ? (
         <p>No comments</p>
       ) : (
-        <details open>
+        <details>
           <ul>
             {comments.map((comment) => (
               <li key={comment.id}>
-                {comment.name}: {comment.body}
+                <strong>{comment.name}</strong>: {comment.body}
+                {comment.email === ActiveUser.email && (
+                  <button onClick={() => deleteComment(comment.id)}>
+                    Delete
+                  </button>
+                )}
               </li>
             ))}
           </ul>
         </details>
       )}
+
+      <form onSubmit={addComment}>
+        <h4>Add a comment</h4>
+        <input
+          type="text"
+          placeholder="Write your comment..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          required
+        />
+        <button type="submit">Add</button>
+      </form>
     </div>
   );
 }
