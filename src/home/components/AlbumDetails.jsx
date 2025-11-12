@@ -36,31 +36,25 @@ function AlbumDetails() {
   }
 
   const deletePhotos = async (id) => {
-    setDetails((prev) => prev.filter((item) => item.id !== id));
     try {
       const response = await fetch(`http://localhost:3000/photos/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
       if (!response.ok) throw new Error("error");
-      console.log("error");
+      setDetails((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
       console.log("error:", err);
-      const itemToRestore = details.find((item) => item.id === id);
-      if (itemToRestore) {
-        setDetails((prev) => [...prev, itemToRestore]);
-      }
+      alert("couldnt delete photo");
     }
   };
 
   const addPhotos = async (thumbnailUrl) => {
-    const newId = "temp" + Date.now();
     const newPhoto = {
-      id: "" + newId,
       thumbnailUrl,
       albumId: id,
     };
-    setDetails((prev) => [...prev, newPhoto]);
+
     try {
       const res = await fetch("http://localhost:3000/photos", {
         method: "POST",
@@ -69,11 +63,10 @@ function AlbumDetails() {
       });
       if (!res.ok) throw new Error();
       const created = await res.json();
-      if (created.id !== newId) {
-        setDetails((prev) => prev.map((t) => (t.id === newId ? created : t)));
-      }
-    } catch {
-      setDetails((prev) => prev.filter((t) => t.id !== newId));
+      setDetails((prev) => [...prev, created]);
+    } catch (err) {
+      console.error(err);
+      alert("couldnt add photo");
     }
   };
 

@@ -25,10 +25,8 @@ function Posts() {
   }, []);
 
   async function addPost(title, body) {
-    const tempId = "temp" + Date.now();
-    const newItem = { id: tempId, userId: "" + ActiveUser.id, title, body };
-    setPosts((prev) => [...prev, newItem]);
-
+    setTitle("");
+    setContent("");
     try {
       const res = await fetch("http://localhost:3000/posts", {
         method: "POST",
@@ -36,22 +34,23 @@ function Posts() {
         body: JSON.stringify({ userId: ActiveUser.id, title, body }),
       });
       if (!res.ok) throw new Error();
-
       const createdPost = await res.json();
-      setPosts((prev) => prev.map((p) => (p.id === tempId ? createdPost : p)));
+      setPosts((prev) => [...prev, createdPost]);
     } catch {
-      setPosts((prev) => prev.filter((p) => p.id !== tempId));
+      alert("couldnt add your post");
     }
   }
 
   async function deletePost(id) {
-    setPosts((prev) => prev.filter((item) => item.id !== id));
     try {
-      await fetch(`http://localhost:3000/posts/${id}`, {
+      const res = await fetch(`http://localhost:3000/posts/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
+      if (!res.ok) throw new Error();
+      setPosts((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
+      alert("couldnt delete your post");
       console.log("error:", err);
     }
   }

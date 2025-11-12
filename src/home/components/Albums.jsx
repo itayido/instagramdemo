@@ -20,14 +20,11 @@ function Albums() {
     fetchAlbums();
   }, [ActiveUser.id]);
 
-  const addAlbum = async (title) => {
-    const newId = "temp" + Date.now();
+  async function addAlbum(title) {
     const newItem = {
-      id: "" + newId,
       title,
       userId: ActiveUser.id,
     };
-    setAlbumsList((prev) => [...prev, newItem]);
 
     try {
       const res = await fetch("http://localhost:3000/albums", {
@@ -37,11 +34,12 @@ function Albums() {
       });
       if (!res.ok) throw new Error();
       const created = await res.json();
-      setAlbumsList((prev) => prev.map((t) => (t.id === newId ? created : t)));
-    } catch {
-      setAlbumsList((prev) => prev.filter((t) => t.id !== newId));
+      setAlbumsList((prev) => [...prev, created]);
+    } catch (err) {
+      console.error(err);
+      alert("couldnt add album");
     }
-  };
+  }
 
   return (
     <div>

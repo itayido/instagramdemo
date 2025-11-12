@@ -21,7 +21,7 @@ function Todo() {
     fetchitems();
   }, []);
 
-  const handleCheckboxChange = async (id) => {
+  async function handleCheckboxChange(id) {
     const listToDo = data.map((item) =>
       item.id === id ? { ...item, completed: !item.completed } : item
     );
@@ -49,17 +49,14 @@ function Todo() {
     } catch (err) {
       console.error("Error updating todo:", err);
     }
-  };
+  }
 
-  const addToDo = async (title) => {
-    const tempId = "temp" + Date.now();
+  async function addToDo(title) {
     const newItem = {
-      id: tempId,
       title,
       completed: false,
       userId: "" + ActiveUser.id,
     };
-    setData((prev) => [...prev, newItem]);
 
     try {
       const res = await fetch("http://localhost:3000/todos", {
@@ -67,21 +64,16 @@ function Todo() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
       });
-
       if (!res.ok) throw new Error();
-
       const createdtodo = await res.json();
-
-      setData((prev) =>
-        prev.map((todo) => (todo.id === tempId ? createdtodo : todo))
-      );
-    } catch {
-      setData((prev) => prev.filter((t) => t.id !== tempId));
+      setData((prev) => [...prev, createdtodo]);
+    } catch (err) {
+      console.error(err);
+      alert("couldnt add to do");
     }
-  };
+  }
 
-  const deleteToDo = async (id) => {
-    setData((prev) => prev.filter((item) => item.id !== id));
+  async function deleteToDo(id) {
     try {
       const response = await fetch(`http://localhost:3000/todos/${id}`, {
         method: "DELETE",
@@ -89,15 +81,12 @@ function Todo() {
       });
 
       if (!response.ok) throw new Error("failed");
-      console.log("deleted");
+      setData((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
       console.log("error:", err);
-      const itemToRestore = data.find((item) => item.id === id);
-      if (itemToRestore) {
-        setData((prev) => [...prev, itemToRestore]);
-      }
+      alert("couldnt delete todo");
     }
-  };
+  }
 
   function handleSubmit(e) {
     e.preventDefault();

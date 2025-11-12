@@ -31,16 +31,13 @@ function PostDetails() {
   async function addComment(e) {
     e.preventDefault();
 
-    const tempId = "temp" + Date.now();
     const newItem = {
       postId,
-      id: tempId,
       name: ActiveUser.username,
       email: ActiveUser.email,
       body: newComment,
     };
 
-    setComments((prev) => [...prev, newItem]);
     setNewComment("");
 
     try {
@@ -50,27 +47,25 @@ function PostDetails() {
         body: JSON.stringify(newItem),
       });
       if (!res.ok) throw new Error("Failed");
-
       const created = await res.json();
-      setComments((prev) => prev.map((c) => (c.id === tempId ? created : c)));
+      setComments((prev) => [...prev, created]);
     } catch (err) {
+      alert("couldnt add your comment");
       console.error("Error:", err);
-      setComments((prev) => prev.filter((c) => c.id !== tempId));
     }
   }
 
   async function deleteComment(commentId) {
-    const comment = comments.find((c) => c.id === commentId);
-    setComments((prev) => prev.filter((c) => c.id !== commentId));
-
     try {
       const res = await fetch(`http://localhost:3000/comments/${commentId}`, {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) throw new Error("Failed");
+      setComments((prev) => prev.filter((c) => c.id !== commentId));
     } catch (err) {
       console.error("Error:", err);
-      setComments((prev) => [...prev, comment]);
+      alert("couldnt delete your comment");
     }
   }
 
