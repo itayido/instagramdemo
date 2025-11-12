@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import "../../../css/todo.css";
 function Todo() {
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");

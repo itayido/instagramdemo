@@ -1,18 +1,18 @@
-import "./App.css";
+import "./css/App.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
 
-import Login from "./login/Login";
-import Register from "./register/register";
-import AddInfo from "./register/AddInfo";
+import Login from "./pages/Login";
+import Register from "./pages/register/register";
+import AddInfo from "./pages/register/AddInfo";
 
-import ProtectedRoute from "./home/components/ProtectedRoute";
-import Home from "./home/Home";
-import Info from "./home/components/Info";
-import Todo from "./home/components/Todo";
-import Posts from "./home/components/Posts";
-import PostDetails from "./home/components/PostDetails";
-import Albums from "./home/components/Albums";
-import AlbumDetails from "./home/components/AlbumDetails";
+import ProtectedRoute from "./ProtectedRoute";
+import Home from "./pages/home/Home";
+import Info from "./pages/home/components/Info";
+import Todo from "./pages/home/components/Todo";
+import Posts from "./pages/home/components/Posts";
+import PostDetails from "./pages/home/components/PostDetails";
+import Albums from "./pages/home/components/Albums";
+import AlbumDetails from "./pages/home/components/AlbumDetails";
 
 function App() {
   return (

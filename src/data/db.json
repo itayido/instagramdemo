@@ -479,13 +479,13 @@
       "userId": "1",
       "id": "5",
       "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
-      "completed": false
+      "completed": true
     },
     {
       "userId": "1",
       "id": "7",
       "title": "illo expedita consequatur quia in",
-      "completed": false
+      "completed": true
     },
     {
       "userId": "1",
@@ -1026,13 +1026,6 @@
       "title": "culpa odio esse rerum omnis laboriosam voluptate repudiandae",
       "url": "https://via.placeholder.com/600/d32776",
       "thumbnailUrl": "https://i.pinimg.com/236x/bb/b3/19/bbb3191bbb831b46eaaf2e740ec9d126.jpg"
-    },
-    {
-      "albumId": "1",
-      "id": "5",
-      "title": "natus nisi omnis corporis facere molestiae rerum in",
-      "url": "https://via.placeholder.com/600/f66b97",
-      "thumbnailUrl": "https://img.mako.co.il/2013/08/20/afasffasfzzxc6_g.jpg"
     },
     {
       "albumId": "1",

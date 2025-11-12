@@ -1,5 +1,3 @@
-import Nav from "./Nav";
-
 function Info() {
   const user = JSON.parse(localStorage.getItem("ActiveUser"));
   return (
