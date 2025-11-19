@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 function Albums() {
   const [albumsList, setAlbumsList] = useState([]);
+  const [newAlbum, setNewAlbum] = useState("");
   const ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
 
   useEffect(() => {
@@ -18,7 +19,7 @@ function Albums() {
       }
     }
     fetchAlbums();
-  }, [ActiveUser.id]);
+  }, []);
 
   async function addAlbum(title) {
     const newItem = {
@@ -41,6 +42,12 @@ function Albums() {
     }
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    addAlbum(newAlbum);
+    setNewAlbum("");
+  }
+
   return (
     <div>
       <ul>
@@ -54,17 +61,14 @@ function Albums() {
               </li>
             ))}
       </ul>
-
-      <input
-        type="text"
-        placeholder="add album"
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && e.target.value.trim()) {
-            addAlbum(e.target.value.trim());
-            e.target.value = "";
-          }
-        }}
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="add album"
+          onChange={(e) => setNewAlbum(e.target.value)}
+        />
+        <button type="submit"> Add </button>
+      </form>
     </div>
   );
 }

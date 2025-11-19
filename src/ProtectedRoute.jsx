@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router";
 
 function ProtectedRoute() {
-  const activeUser = JSON.parse(localStorage.getItem("ActiveUser") || {});
+  const user = localStorage.getItem("ActiveUser");
+  const activeUser = JSON.parse(user || "{}");
 
   if (!activeUser || !activeUser.username) {
     return <Navigate to="/register" />;

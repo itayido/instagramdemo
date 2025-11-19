@@ -146,12 +146,6 @@
     },
     {
       "userId": "1",
-      "id": "8",
-      "title": "dolorem dolore est ipsam",
-      "body": "dignissimos aperiam dolorem qui eum\nfacilis quibusdam animi sint suscipit qui sint possimus cum\nquaerat magni maiores excepturi\nipsam ut commodi dolor voluptatum modi aut vitae"
-    },
-    {
-      "userId": "1",
       "id": "10",
       "title": "optio molestias id quia eum",
       "body": "quo et expedita modi cum officia vel magni\ndoloribus qui repudiandae\nvero nisi sit\nquos veniam quod sed accusamus veritatis error"
@@ -475,12 +469,6 @@
     }
   ],
   "todos": [
-    {
-      "userId": "1",
-      "id": "5",
-      "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
-      "completed": true
-    },
     {
       "userId": "1",
       "id": "7",
@@ -996,16 +984,15 @@
       "title": "wow something new to do",
       "completed": true,
       "userId": "1"
+    },
+    {
+      "id": "d8f7",
+      "title": "dsfdsf",
+      "completed": false,
+      "userId": "1"
     }
   ],
   "photos": [
-    {
-      "albumId": "1",
-      "id": "1",
-      "title": "accusamus beatae ad facilis cum similique qui sunt",
-      "url": "https://via.placeholder.com/600/92c952",
-      "thumbnailUrl": "https://i.pinimg.com/236x/de/14/ca/de14ca2a30ce7b3442e2d108cd7fded8.jpg"
-    },
     {
       "albumId": "1",
       "id": "2",
@@ -1026,13 +1013,6 @@
       "title": "culpa odio esse rerum omnis laboriosam voluptate repudiandae",
       "url": "https://via.placeholder.com/600/d32776",
       "thumbnailUrl": "https://i.pinimg.com/236x/bb/b3/19/bbb3191bbb831b46eaaf2e740ec9d126.jpg"
-    },
-    {
-      "albumId": "1",
-      "id": "6",
-      "title": "accusamus ea aliquid et amet sequi nemo",
-      "url": "https://via.placeholder.com/600/56a8c2",
-      "thumbnailUrl": "https://pickture.co.il/wp-content/uploads/2023/04/%D7%AA%D7%9E%D7%95%D7%A0%D7%94-%D7%A9%D7%9C-%D7%9B%D7%9C%D7%91-7.jpg"
     },
     {
       "albumId": "1",
@@ -1323,6 +1303,16 @@
       "userId": "5",
       "id": "50",
       "title": "sed qui sed quas sit ducimus dolor"
+    },
+    {
+      "id": "997d",
+      "title": ".lfdvlfeb",
+      "userId": "1"
+    },
+    {
+      "id": "6a60",
+      "title": "dslvkds",
+      "userId": "1"
     }
   ],
   "comments": [
@@ -1467,46 +1457,39 @@
       "body": "qui harum consequatur fugiat\net eligendi perferendis at molestiae commodi ducimus\ndoloremque asperiores numquam qui\nut sit dignissimos reprehenderit tempore"
     },
     {
-      "postId": null,
+      "postId": "6",
       "id": "21",
       "name": "aliquid rerum mollitia qui a consectetur eum sed",
       "email": "Noemie@marques.me",
       "body": "deleniti aut sed molestias explicabo\ncommodi odio ratione nesciunt\nvoluptate doloremque est\nnam autem error delectus"
     },
     {
-      "postId": null,
+      "postId": "6",
       "id": "22",
       "name": "porro repellendus aut tempore quis hic",
       "email": "Khalil@emile.co.uk",
       "body": "qui ipsa animi nostrum praesentium voluptatibus odit\nqui non impedit cum qui nostrum aliquid fuga explicabo\nvoluptatem fugit earum voluptas exercitationem temporibus dignissimos distinctio\nesse inventore reprehenderit quidem ut incidunt nihil necessitatibus rerum"
     },
     {
-      "postId": null,
+      "postId": "6",
       "id": "23",
       "name": "quis tempora quidem nihil iste",
       "email": "Sophia@arianna.co.uk",
       "body": "voluptates provident repellendus iusto perspiciatis ex fugiat ut\nut dolor nam aliquid et expedita voluptate\nsunt vitae illo rerum in quos\nvel eligendi enim quae fugiat est"
     },
     {
-      "postId": null,
+      "postId": "6",
       "id": "24",
       "name": "in tempore eos beatae est",
       "email": "Jeffery@juwan.us",
       "body": "repudiandae repellat quia\nsequi est dolore explicabo nihil et\net sit et\net praesentium iste atque asperiores tenetur"
     },
     {
-      "postId": null,
+      "postId": "6",
       "id": "25",
       "name": "autem ab ea sit alias hic provident sit",
       "email": "Isaias_Kuhic@jarrett.net",
       "body": "sunt aut quae laboriosam sit ut impedit\nadipisci harum laborum totam deleniti voluptas odit rem ea\nnon iure distinctio ut velit doloribus\net non ex"
-    },
-    {
-      "id": "aee7",
-      "postId": "1",
-      "userId": "1",
-      "name": "Bret",
-      "body": "slkcjwalsjclac"
     },
     {
       "id": "3bfb",
@@ -1521,6 +1504,20 @@
       "name": "Bret",
       "email": "Sincere@april.biz",
       "body": "lskfe"
+    },
+    {
+      "id": "0b7d",
+      "postId": "6",
+      "name": "Bret",
+      "email": "Sincere@april.biz",
+      "body": "dc;skdv"
+    },
+    {
+      "id": "034f",
+      "postId": "6",
+      "name": "Bret",
+      "email": "Sincere@april.biz",
+      "body": "nnnn"
     }
   ]
 }

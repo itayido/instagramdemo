@@ -13,7 +13,6 @@ function Todo() {
         );
         const data = await response.json();
         setData(data);
-        console.log(data);
       } catch (err) {
         console.log(err);
       }
@@ -37,15 +36,12 @@ function Todo() {
         },
         body: JSON.stringify({ completed: updatedItem.completed }),
       };
-      console.log(updateOption);
 
       const response = await fetch(
         `http://localhost:3000/todos/${id}`,
         updateOption
       );
       if (!response.ok) throw new Error("Failed to update todo");
-
-      console.log("Todo updated on server:", updatedItem);
     } catch (err) {
       console.error("Error updating todo:", err);
     }

@@ -20,6 +20,7 @@ function PostDetails() {
           `http://localhost:3000/comments?postId=${postId}`
         );
         const commentsData = await commentsRes.json();
+
         setComments(commentsData);
       } catch (err) {
         console.error("Error:", err);

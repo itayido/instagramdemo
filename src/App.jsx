@@ -25,8 +25,6 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<Home />}>
-            <Route index element={<Navigate to="info" />} />
-
             <Route path="info" element={<Info />} />
             <Route path="todolist" element={<Todo />} />
 

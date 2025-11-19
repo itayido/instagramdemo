@@ -25,7 +25,6 @@ function Login() {
       const user = data[0];
 
       if (user.website === password) {
-        setMessage(`Welcome back, ${user.username}!`);
         localStorage.setItem("ActiveUser", JSON.stringify(user));
         navigate("/home");
       } else {

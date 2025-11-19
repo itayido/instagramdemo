@@ -4,32 +4,30 @@ import { useParams } from "react-router";
 function AlbumDetails() {
   const { id } = useParams();
   const [details, setDetails] = useState([]);
+  const [newPhoto, setNewPhoto] = useState("");
+
   const [start, setStart] = useState(0);
   const limit = 5;
 
-  async function fetchDetails() {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/photos?albumId=${id}&_start=${start}&_limit=${limit}`
-      );
-      const responseJson = await response.json();
-      if (start === 0) {
-        setDetails(responseJson);
-      } else {
-        setDetails((prev) => [...prev, ...responseJson]);
+  useEffect(() => {
+    async function fetchDetails() {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/photos?albumId=${id}&_start=${start}&_limit=${limit}`
+        );
+        const responseJson = await response.json();
+        if (start === 0) {
+          setDetails(responseJson);
+        } else {
+          setDetails((prev) => [...prev, ...responseJson]);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
-  }
 
-  useEffect(() => {
-    setStart(0);
-  }, [id]);
-
-  useEffect(() => {
     fetchDetails();
-  }, [start, id]);
+  }, [start]);
 
   function handleLoadMore() {
     setStart((prevStart) => prevStart + limit);
@@ -70,13 +68,18 @@ function AlbumDetails() {
     }
   };
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    addPhotos(newPhoto);
+    setNewPhoto("");
+  }
+
   return (
     <div>
       <ul>
         {details.length === 0
           ? "No Photos"
           : details.map((photo) => {
-              console.log("photo: ", photo);
               return (
                 <li key={photo.id}>
                   <img
@@ -89,19 +92,14 @@ function AlbumDetails() {
             })}
       </ul>
       <button onClick={handleLoadMore}>load more</button>
-      <input
-        style={{ marginTop: "5px" }}
-        type="text"
-        placeholder=" enter url "
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && e.target.value.trim()) {
-            addPhotos(e.target.value.trim());
-            e.target.value = "";
-          }
-        }}
-      ></input>
-
-      {id}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="add album"
+          onChange={(e) => setNewPhoto(e.target.value)}
+        />
+        <button type="submit"> Add </button>
+      </form>
     </div>
   );
 }
